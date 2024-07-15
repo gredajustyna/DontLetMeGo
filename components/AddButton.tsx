@@ -27,10 +27,15 @@ const StyledText = styled(Text)`
   color: white;
 `;
 
-export const AddButton = () => {
+interface AddButtonProps {
+  onPress: () => void;
+  disabled?: boolean;
+}
+
+export const AddButton = ({onPress, disabled = false}: AddButtonProps) => {
   return (
     <ButtonContainer>
-      <StyledButton onPress={() => {}}>
+      <StyledButton onPress={onPress} disabled={disabled}>
         <StyledText>Add</StyledText>
       </StyledButton>
     </ButtonContainer>

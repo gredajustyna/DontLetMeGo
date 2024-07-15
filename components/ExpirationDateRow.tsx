@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {Dispatch, SetStateAction, useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import styled from 'styled-components';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import CalendarPicker from 'react-native-calendar-picker';
 
 const StyledView = styled(View)`
   display: flex;
@@ -40,19 +41,51 @@ const StyledIcon = styled(Icon)`
   color: green;
 `;
 
-export const ExpirationDateRow = () => {
-  const [text, onChangeText] = useState(new Date().toLocaleDateString());
+const CalendarContainer = styled(View)`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 80px;
+  z-index: 1;
+`;
+
+interface ExpirationDateRowProps {
+  selectedDate: string;
+  setSelectedDate: Dispatch<SetStateAction<string>>;
+}
+
+export const ExpirationDateRow = ({
+  selectedDate,
+  setSelectedDate,
+}: ExpirationDateRowProps) => {
+  const [isCalendarVisible, setIsCalendarVisible] = useState(false);
   return (
     <StyledView>
       <Text>Expiration date:</Text>
       <InputContainer>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setIsCalendarVisible(!isCalendarVisible)}>
           <StyledIcon name="calendar" size={20} />
         </TouchableOpacity>
-
+        {isCalendarVisible && (
+          <CalendarContainer>
+            <CalendarPicker
+              onDateChange={date => {
+                setSelectedDate(date.toLocaleDateString());
+                setIsCalendarVisible(false);
+              }}
+              startFromMonday
+              selectedDayColor="green"
+              minDate={new Date()}
+            />
+          </CalendarContainer>
+        )}
         <StyledInput
-          onChangeText={onChangeText}
-          value={text}
+          editable={false}
+          value={selectedDate}
           placeholder="name"
           cursorColor="green"
         />

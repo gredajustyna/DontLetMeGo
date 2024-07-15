@@ -16,18 +16,17 @@ import {
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Category} from '../types/Category';
 import {FoodRow} from '../components/FoodRow';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {foodSelector} from '../store/app.selector.ts';
 
 export const MainPage = ({navigation}): ReactElement => {
   const isDarkMode = useColorScheme() === 'dark';
-  const dispatch = useDispatch();
   const food = useSelector(foodSelector);
   const sampleFood: Food = {
     id: uuid.v4().toString(),
     name: 'milk',
     category: Category.DAIRY,
-    expirationDate: new Date(),
+    expirationDate: new Date().toLocaleDateString(),
   };
 
   const backgroundStyle = {

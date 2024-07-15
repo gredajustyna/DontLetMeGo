@@ -1,10 +1,16 @@
 import React, {useState} from 'react';
-import {SafeAreaView, TextInput, View} from 'react-native';
+import {SafeAreaView, TouchableOpacity, View} from 'react-native';
 import styled from 'styled-components';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {AddButton} from '../components/AddButton';
 import {CategoryRow} from '../components/CategoryRow';
 import {ExpirationDateRow} from '../components/ExpirationDateRow';
+import {FoodNameRow} from '../components/FoodNameRow';
+import {Category} from '../types/Category';
+import {useDispatch} from 'react-redux';
+import {Food} from '../types/Food';
+import uuid from 'react-native-uuid';
+import {addFood} from '../store/app.actions';
 
 const IconContainer = styled(View)`
   width: 100%;
@@ -15,46 +21,52 @@ const IconContainer = styled(View)`
   display: flex;
 `;
 
-const InputContainer = styled(View)`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 50px;
-`;
+const CATEGORIES = Object.values(Category);
 
-const StyledInput = styled(TextInput)`
-  height: 40px;
-  border-width: 1px;
-  padding: 10px;
-  background-color: '#fff';
-  color: '#000';
-  border-radius: 12px;
-  margin-left: 10px;
-  margin-right: 10px;
-
-  &:focus {
-    border-color: green;
-  }
-`;
-
-export const AddPage = () => {
+export const AddPage = ({navigation}) => {
   const [text, onChangeText] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(CATEGORIES[0]);
+  const [selectedDate, setSelectedDate] = useState(
+    new Date().toLocaleDateString(),
+  );
+  const dispatch = useDispatch();
+  const isAddButtonDisabled = text.length === 0;
+
+  const handleAddButtonPress = (): void => {
+    const food: Food = {
+      id: uuid.v4().toString(),
+      name: text,
+      category: selectedCategory,
+      expirationDate: selectedDate,
+    };
+    dispatch(addFood(food));
+    navigation.goBack();
+  };
 
   return (
     <SafeAreaView style={{height: '100%'}}>
       <IconContainer>
-        <Icon name="chevron-left" size={20} color="green" />
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <Icon name="chevron-left" size={20} color="green" />
+        </TouchableOpacity>
       </IconContainer>
-      <InputContainer>
-        <StyledInput
-          onChangeText={onChangeText}
-          value={text}
-          placeholder="name"
-        />
-      </InputContainer>
-      <CategoryRow />
-      <ExpirationDateRow />
-      <AddButton />
+      <FoodNameRow text={text} onChangeText={onChangeText} />
+      <CategoryRow
+        categories={CATEGORIES}
+        currentCategory={selectedCategory}
+        setCurrentCategory={setSelectedCategory}
+      />
+      <ExpirationDateRow
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+      />
+      <AddButton
+        onPress={handleAddButtonPress}
+        disabled={isAddButtonDisabled}
+      />
     </SafeAreaView>
   );
 };

@@ -33,7 +33,7 @@ export const FoodRow = ({food}: FoodRowProps) => {
       <StyledImage source={mapCategoryToPhoto(food.category)} />
       <NameRow>
         <Text>{food.name}</Text>
-        <Text>{food.expirationDate.toDateString()}</Text>
+        <Text>{food.expirationDate}</Text>
       </NameRow>
     </StyledRow>
   );
