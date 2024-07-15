@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {AddButton} from '../components/AddButton';
 import {CategoryRow} from '../components/CategoryRow';
+import {ExpirationDateRow} from '../components/ExpirationDateRow';
 
 const IconContainer = styled(View)`
   width: 100%;
@@ -52,6 +53,7 @@ export const AddPage = () => {
         />
       </InputContainer>
       <CategoryRow />
+      <ExpirationDateRow />
       <AddButton />
     </SafeAreaView>
   );
