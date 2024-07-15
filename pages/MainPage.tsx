@@ -39,13 +39,10 @@ export const MainPage = ({navigation}): ReactElement => {
 
   return (
     <SafeAreaView style={backgroundStyle}>
-      <ScrollView>
-        {food.map(item => (
-          <FoodRow food={item} />
-        ))}
-      </ScrollView>
-      <FoodRow food={sampleFood} />
-      <FlatList data={food} renderItem={({item}) => <FoodRow food={item} />} />
+      <FlatList
+        data={food}
+        renderItem={({item}) => <FoodRow food={item} key={item.id} />}
+      />
       <TouchableOpacity
         style={{
           borderWidth: 1,

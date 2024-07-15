@@ -11,7 +11,7 @@ export const appSlice = createSlice({
   initialState,
   reducers: {
     addFood: (state: AppState, action: PayloadAction<Food>) => {
-      state[action.payload.id] = action.payload;
+      state.food.push(action.payload);
     },
     deleteFood: (state: AppState, action: PayloadAction<Food>) => {
       delete state[action.payload.id];
