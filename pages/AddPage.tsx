@@ -1,14 +1,9 @@
 import React, {useState} from 'react';
-import {
-  SafeAreaView,
-  TextInput,
-  View,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
+import {SafeAreaView, TextInput, View} from 'react-native';
 import styled from 'styled-components';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {AddButton} from '../components/AddButton';
+import {CategoryRow} from '../components/CategoryRow';
 
 const IconContainer = styled(View)`
   width: 100%;
@@ -47,7 +42,7 @@ export const AddPage = () => {
   return (
     <SafeAreaView style={{height: '100%'}}>
       <IconContainer>
-        <Icon name="rocket" size={30} color="#900" />
+        <Icon name="chevron-left" size={20} color="green" />
       </IconContainer>
       <InputContainer>
         <StyledInput
@@ -56,6 +51,7 @@ export const AddPage = () => {
           placeholder="name"
         />
       </InputContainer>
+      <CategoryRow />
       <AddButton />
     </SafeAreaView>
   );
