@@ -1,25 +1,62 @@
-import React, {ReactElement} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, {useState} from 'react';
+import {
+  SafeAreaView,
+  TextInput,
+  View,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import styled from 'styled-components';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {AddButton} from '../components/AddButton';
 
-const IconContainer = styled.div`
+const IconContainer = styled(View)`
   width: 100%;
   height: 50px;
   padding: 10px;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: center;
+  align-items: start;
   display: flex;
 `;
 
-const InputContainer = styled.div``;
+const InputContainer = styled(View)`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 50px;
+`;
 
-export const AddPage = (): ReactElement => {
+const StyledInput = styled(TextInput)`
+  height: 40px;
+  border-width: 1px;
+  padding: 10px;
+  background-color: '#fff';
+  color: '#000';
+  border-radius: 12px;
+  margin-left: 10px;
+  margin-right: 10px;
+
+  &:focus {
+    border-color: green;
+  }
+`;
+
+export const AddPage = () => {
+  const [text, onChangeText] = useState('');
+
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{height: '100%'}}>
       <IconContainer>
         <Icon name="rocket" size={30} color="#900" />
       </IconContainer>
+      <InputContainer>
+        <StyledInput
+          onChangeText={onChangeText}
+          value={text}
+          placeholder="name"
+        />
+      </InputContainer>
+      <AddButton />
     </SafeAreaView>
   );
 };
