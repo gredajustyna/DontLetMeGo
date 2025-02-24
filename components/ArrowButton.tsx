@@ -25,10 +25,10 @@ interface ArrowButtonProps {
 
 export const ArrowButton = ({symbol, onPress}: ArrowButtonProps) => {
   return (
-    <ButtonContainer>
-      <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress}>
+      <ButtonContainer>
         <StyledText>{symbol}</StyledText>
-      </TouchableOpacity>
-    </ButtonContainer>
+      </ButtonContainer>
+    </TouchableOpacity>
   );
 };
