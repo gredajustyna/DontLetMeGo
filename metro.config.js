@@ -26,4 +26,10 @@ const customConfig = {
   watchFolders: ['./', './node_modules'],
 };
 
-module.exports = mergeConfig(defaultConfig, customConfig);
+const {
+  wrapWithReanimatedMetroConfig,
+} = require('react-native-reanimated/metro-config');
+
+module.exports = wrapWithReanimatedMetroConfig(
+  mergeConfig(defaultConfig, customConfig),
+);

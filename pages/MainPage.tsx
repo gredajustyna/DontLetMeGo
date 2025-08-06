@@ -1,20 +1,15 @@
 import React from 'react';
 import type {ReactElement} from 'react';
-import {Food} from '../types/Food.ts';
 import '../assets/images/index.ts';
-import uuid from 'react-native-uuid';
 
 import {
   FlatList,
   SafeAreaView,
   useColorScheme,
   Text,
-  ScrollView,
   TouchableOpacity,
 } from 'react-native';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {Category} from '../types/Category';
 import {FoodRow} from '../components/FoodRow';
 import {useSelector} from 'react-redux';
 import {foodSelector} from '../store/app.selector.ts';
@@ -22,23 +17,15 @@ import {foodSelector} from '../store/app.selector.ts';
 export const MainPage = ({navigation}): ReactElement => {
   const isDarkMode = useColorScheme() === 'dark';
   const food = useSelector(foodSelector);
-  const sampleFood: Food = {
-    id: uuid.v4().toString(),
-    name: 'milk',
-    category: Category.DAIRY,
-    expirationDate: new Date().toLocaleDateString(),
-  };
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-    height: '100%',
-    padding: '4px',
-  };
+  // const StyledList = styled(FlatList)`
+  //   padding-top: 80px;
+  // `;
 
   console.log(food);
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaView>
       <FlatList
         data={food}
         renderItem={({item}) => <FoodRow food={item} key={item.id} />}
@@ -64,9 +51,7 @@ export const MainPage = ({navigation}): ReactElement => {
           elevation: 5,
         }}
         onPress={() => navigation.navigate('Add')}>
-        <Text style={{color: 'white', fontSize: 30, fontWeight: 'lighter'}}>
-          +
-        </Text>
+        <Text>+</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
